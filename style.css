@@ -37,10 +37,11 @@ label {
 }
 input[type="date"] {
     background-color: var(--input-bg);
-    padding: 8px;
+    padding: 8px 30px;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 20px;
+    margin-right: 50px;
     font-size: 2rem;
 }
 
@@ -50,7 +51,7 @@ input[type="date"]:hover{
 
 #subjectIdInput{
     font-size: 2rem;
-    width: 16vw;
+    width: 240px;
     background-color: var(--input-bg);
 }
 
