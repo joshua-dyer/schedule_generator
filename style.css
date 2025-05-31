@@ -1,0 +1,76 @@
+:root{
+    --main-bg: #121212;
+    --container-bg: #8495a0;
+    --input-bg: #bbdcf2;
+    --input-hover: #9fe9de;
+    --table-header: #486d85;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: var(--main-bg);
+    color: #333;
+}
+h1, h2 {
+    color: #0056b3;
+}
+.container {
+    background-color: var(--container-bg);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin: 20px auto;
+}
+label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+input[type="date"] {
+    background-color: var(--input-bg);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+input[type="date"]:hover{
+    background-color: var(--input-hover);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+th {
+    background-color: var(--table-header);
+    color: white;
+    font-weight: bold;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+tr:nth-child(odd) {
+    color: white;
+}
+
+#printScheduleBtn{
+    background-color: var(--input-bg);
+    border-radius: 5px;
+}
+
+#printScheduleBtn:hover{
+    background-color: var(--input-hover);
+    color: black;
+   
+}
