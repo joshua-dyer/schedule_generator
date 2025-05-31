@@ -1,50 +1,50 @@
 // Get references to the HTML elements
+const scheduleForm = document.getElementById('scheduleForm'); // NEW: Get form
+const subjectIdInput = document.getElementById('subjectIdInput'); // NEW: Get subject ID input
 const startDateInput = document.getElementById('startDateInput');
 const scheduleOutputDiv = document.getElementById('scheduleOutput');
-const printScheduleBtn = document.getElementById('printScheduleBtn'); // NEW: Get print button
+const printScheduleBtn = document.getElementById('printScheduleBtn');
 
 /**
- * Formats a Date object into a readable string (e.g., "MM/DD/YYYY").
+ * Formats a Date object into a readable string (e.g., "DD-MMM-YYYY").
  * @param {Date} date The Date object to format.
  * @returns {string} The formatted date string.
  */
 function formatDate(date) {
-    const options = {   // Options include formatting for research date format
-        year: 'numeric',
-        month: 'short',
-        day: '2-digit' 
-    };
-    // Generate the parts of the date string
-    const day = date.getDate().toString().padStart(2, '0'); 
-    const month = date.toLocaleDateString('en-US', {month: 'short'});
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = date.toLocaleDateString('en-US', { month: 'short' });
     const year = date.getFullYear();
-
-
     return `${day}-${month}-${year}`;
 }
 
 /**
  * Generates the visit schedule table based on the selected start date.
+ * This function is now called when the form is successfully submitted.
  */
-function generateSchedule() {
-    const startDateString = startDateInput.value;
+function generateSchedule(event) {
+    // Prevent the default form submission behavior (which would reload the page)
+    event.preventDefault();
 
-    if (!startDateString) {
-        scheduleOutputDiv.innerHTML = '<p>Please select a start date to generate the schedule.</p>';
-        // Optionally disable print button if no schedule
+    const startDateString = startDateInput.value;
+    const subjectId = subjectIdInput.value; // Get the subject ID
+
+    // We can rely on HTML5 'required' and 'pattern' for basic validation
+    // but a final check here is good for robust applications.
+    if (!startDateString || !subjectId) {
+        // This case should ideally be caught by 'required' attribute,
+        // but it's a fallback.
+        scheduleOutputDiv.innerHTML = '<p>Please enter both Subject ID and select a start date to generate the schedule.</p>';
         printScheduleBtn.disabled = true;
         return;
     }
 
-    // Enable the print button once a schedule is generated
     printScheduleBtn.disabled = false;
 
     const parts = startDateString.split('-');
     let currentTargetDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
 
     let tableHTML = `
-        <h2>Visit Schedule</h2>
-        <table>
+        <h2>Visit Schedule for Subject ID: ${subjectId}</h2> <table>
             <thead>
                 <tr>
                     <th>Visit Number</th>
@@ -74,10 +74,9 @@ function generateSchedule() {
         if (i < 10) {
             currentTargetDate.setDate(currentTargetDate.getDate() + 56);
 
-            // Add an additional 4 weeks for Visit 8 and 10
-            if(i === 7 || i === 9) {
+            if (i === 7 || i === 9) {
                 currentTargetDate.setDate(currentTargetDate.getDate() + 28);
-        }
+            }
         }
     }
 
@@ -93,17 +92,15 @@ function generateSchedule() {
  * Handles printing the schedule table.
  */
 function printSchedule() {
-    const scheduleContent = scheduleOutputDiv.innerHTML; // Get the content of the schedule div
+    const scheduleContent = scheduleOutputDiv.innerHTML;
 
     if (!scheduleContent || scheduleOutputDiv.querySelector('table') === null) {
         alert('Please generate a schedule first!');
         return;
     }
 
-    // Create a new window for printing
     const printWindow = window.open('', '_blank');
 
-    // Write the HTML for the print page
     printWindow.document.write(`
         <!DOCTYPE html>
         <html>
@@ -116,7 +113,7 @@ function printSchedule() {
                 }
                 h1, h2 {
                     text-align: center;
-                    color: #333; /* Darker for print */
+                    color: #333;
                 }
                 table {
                     width: 100%;
@@ -124,42 +121,42 @@ function printSchedule() {
                     margin-top: 20px;
                 }
                 th, td {
-                    border: 1px solid #000; /* Stronger borders for print */
+                    border: 1px solid #000;
                     padding: 8px;
                     text-align: left;
                 }
                 th {
-                    background-color: #f2f2f2; /* Lighter background for print */
+                    background-color: #f2f2f2;
                     color: #000;
                 }
-                /* Optional: Hide elements that are not useful for print */
                 @media print {
-                    /* You could add more print-specific styles here if needed */
+                    /* ... */
                 }
             </style>
         </head>
         <body>
-            <h1>Visit Schedule</h1>
             ${scheduleContent}
         </body>
         </html>
     `);
 
-    // Close the document stream for the new window
     printWindow.document.close();
 
-    // Wait for the content to render, then trigger print dialog
-    // A small delay ensures the content is fully loaded before printing
     printWindow.onload = function() {
-        printWindow.focus(); // Focus on the new window
-        printWindow.print(); // Open the print dialog
-        printWindow.close(); // Close the print window after printing (optional, user preference)
+        printWindow.focus();
+        printWindow.print();
+        printWindow.close();
     };
 }
 
-// Add event listeners
-startDateInput.addEventListener('change', generateSchedule);
-printScheduleBtn.addEventListener('click', printSchedule); // NEW: Listen for click on print button
+// NEW: Event listeners
+// Listen for the form submission to trigger schedule generation
+scheduleForm.addEventListener('submit', generateSchedule);
+printScheduleBtn.addEventListener('click', printSchedule);
 
 // Initial call to generate the schedule (and set print button state)
-generateSchedule();
+// This will now show the "Please enter..." message until form is submitted.
+// No initial call to generateSchedule here, as it's triggered by form submit.
+// Instead, just set print button to disabled initially.
+printScheduleBtn.disabled = true;
+scheduleOutputDiv.innerHTML = '<p>Please enter Subject ID and select a start date, then click "Generate Schedule".</p>';

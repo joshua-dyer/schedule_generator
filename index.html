@@ -3,22 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visit Schedule Generator for Lilly J1G-MC-LAKI</title>
+    <title>Visit Schedule Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Visit Schedule Generator</h1>
-        <h2>Lilly Protocol J1G-MC-LAKI</h2>
 
-        <label for="startDateInput">Select Visit 2 Date:</label>
-        <input type="date" id="startDateInput">
+        <form id="scheduleForm">
+            <label for="subjectIdInput">Subject ID (6-digit numeric):</label>
+            <input
+                type="text"
+                id="subjectIdInput"
+                name="subjectId"
+                pattern="[0-9]{6}"
+                title="Please enter a 6-digit numeric ID (e.g., 123456)"
+                required
+            >
 
+            <label for="startDateInput">Select Visit 2 Date:</label>
+            <input type="date" id="startDateInput" required>
+            <button type="submit" id="generateScheduleBtn">Generate Schedule</button>
+        </form>
+
+       
         <button id="printScheduleBtn">Print Schedule</button>
 
         <div id="scheduleOutput">
             </div>
     </div>
 
-    <script src="main.js"></script> </body>
+    <script src="main.js"></script>
+</body>
 </html>

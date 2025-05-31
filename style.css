@@ -4,6 +4,7 @@
     --input-bg: #bbdcf2;
     --input-hover: #9fe9de;
     --table-header: #486d85;
+    --faded-text: #486d85;
 }
 
 
@@ -24,6 +25,11 @@ h1, h2 {
     max-width: 900px;
     margin: 20px auto;
 }
+
+.flex-container{
+    display: flex;
+}
+
 label {
     font-weight: bold;
     margin-bottom: 8px;
@@ -35,11 +41,17 @@ input[type="date"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 20px;
-    font-size: 16px;
+    font-size: 2rem;
 }
 
 input[type="date"]:hover{
     background-color: var(--input-hover);
+}
+
+#subjectIdInput{
+    font-size: 2rem;
+    width: 16vw;
+    background-color: var(--input-bg);
 }
 
 table {
@@ -64,12 +76,17 @@ tr:nth-child(odd) {
     color: white;
 }
 
-#printScheduleBtn{
+#printScheduleBtn, #generateScheduleBtn{
     background-color: var(--input-bg);
     border-radius: 5px;
+    color: var(--faded-text);
+    font-size: 2rem;
+    padding: 8px 20px;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.5);
+    
 }
 
-#printScheduleBtn:hover{
+#printScheduleBtn:hover, #generateScheduleBtn:hover{
     background-color: var(--input-hover);
     color: black;
    
