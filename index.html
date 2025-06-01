@@ -11,7 +11,8 @@
         <h1>Visit Schedule Generator</h1>
 
         <form id="scheduleForm">
-            <label for="subjectIdInput">Subject ID (6-digit numeric):</label>
+            <div class="input-container">
+            <label for="subjectIdInput" id="subjedtIdInputLabel">Subject ID (6-digit numeric):</label>
             <input
                 type="text"
                 id="subjectIdInput"
@@ -20,6 +21,7 @@
                 title="Please enter a 6-digit numeric ID (e.g., 123456)"
                 required
             >
+            </div>
 
             <label for="startDateInput">Select Visit 2 Date:</label>
             <input type="date" id="startDateInput" required>

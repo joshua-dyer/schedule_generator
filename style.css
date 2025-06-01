@@ -54,6 +54,10 @@ input[type="date"]:hover{
     width: 240px;
     background-color: var(--input-bg);
 }
+#subjedtIdInputLabel{
+    font-size: 2rem;
+    width: 240px
+}
 
 table {
     width: 100%;
@@ -87,8 +91,12 @@ tr:nth-child(odd) {
     
 }
 
-#printScheduleBtn:hover, #generateScheduleBtn:hover{
+#printScheduleBtn:hover, #generateScheduleBtn:hover, #subjectIdInput:hover{
     background-color: var(--input-hover);
     color: black;
    
+}
+
+.input-container{
+    display: flex;
 }
