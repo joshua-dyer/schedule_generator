@@ -159,9 +159,8 @@ function printSchedule() {
 scheduleForm.addEventListener('submit', generateSchedule);
 printScheduleBtn.addEventListener('click', printSchedule);
 
-// Initial call to generate the schedule (and set print button state)
 // This will now show the "Please enter..." message until form is submitted.
 // No initial call to generateSchedule here, as it's triggered by form submit.
-// Instead, just set print button to disabled initially.
+// Set print button to disabled initially.
 printScheduleBtn.disabled = true;
 scheduleOutputDiv.innerHTML = '<p>Please enter Subject ID and select a start date, then click "Generate Schedule".</p>';
