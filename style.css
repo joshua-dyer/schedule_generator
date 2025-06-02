@@ -2,6 +2,7 @@
     --main-bg: #121212;
     --container-bg: #8495a0;
     --input-bg: #bbdcf2;
+    --disabled-bg: #a1a9ae;
     --input-hover: #9fe9de;
     --table-header: #486d85;
     --faded-text: #486d85;
@@ -94,8 +95,12 @@ tr:nth-child(odd) {
 #printScheduleBtn:hover, #generateScheduleBtn:hover, #subjectIdInput:hover{
     background-color: var(--input-hover);
     color: black;
-   
 }
+#printScheduleBtn:disabled{
+    visibility: hidden;
+}
+
+
 
 .input-container{
     display: flex;

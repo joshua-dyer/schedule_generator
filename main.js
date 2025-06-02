@@ -1,6 +1,6 @@
 // Get references to the HTML elements
-const scheduleForm = document.getElementById('scheduleForm'); // NEW: Get form
-const subjectIdInput = document.getElementById('subjectIdInput'); // NEW: Get subject ID input
+const scheduleForm = document.getElementById('scheduleForm'); 
+const subjectIdInput = document.getElementById('subjectIdInput');
 const startDateInput = document.getElementById('startDateInput');
 const scheduleOutputDiv = document.getElementById('scheduleOutput');
 const printScheduleBtn = document.getElementById('printScheduleBtn');
@@ -10,6 +10,8 @@ const printScheduleBtn = document.getElementById('printScheduleBtn');
  * @param {Date} date The Date object to format.
  * @returns {string} The formatted date string.
  */
+
+// Sets date to match format used in research 
 function formatDate(date) {
     const day = date.getDate().toString().padStart(2, '0');
     const month = date.toLocaleDateString('en-US', { month: 'short' });
@@ -19,20 +21,19 @@ function formatDate(date) {
 
 /**
  * Generates the visit schedule table based on the selected start date.
- * This function is now called when the form is successfully submitted.
+ * This function is called when the form is successfully submitted.
  */
 function generateSchedule(event) {
-    // Prevent the default form submission behavior (which would reload the page)
+    // Prevent the default form submission behavior (which will reload the page)
     event.preventDefault();
 
     const startDateString = startDateInput.value;
-    const subjectId = subjectIdInput.value; // Get the subject ID
+    const subjectId = subjectIdInput.value; 
 
-    // We can rely on HTML5 'required' and 'pattern' for basic validation
-    // but a final check here is good for robust applications.
+    // Basic input validation via pattern/required
+    // but a final check here is is made to ensure necessary input
     if (!startDateString || !subjectId) {
-        // This case should ideally be caught by 'required' attribute,
-        // but it's a fallback.
+
         scheduleOutputDiv.innerHTML = '<p>Please enter both Subject ID and select a start date to generate the schedule.</p>';
         printScheduleBtn.disabled = true;
         return;
@@ -55,6 +56,8 @@ function generateSchedule(event) {
             <tbody>
     `;
 
+    // This loop will create a schedule for visits 2 - 10, taking into account the 
+    // additional 4 week gap at visit 8 and 10.  
     for (let i = 2; i <= 10; i++) {
         let visitNumber = `Visit ${i}`;
         let visitWindowStart = new Date(currentTargetDate);
@@ -71,9 +74,11 @@ function generateSchedule(event) {
             </tr>
         `;
 
-        if (i < 10) {
+        if (i < 10) {  // While another visit exists, add 8 weeks (56 days)
             currentTargetDate.setDate(currentTargetDate.getDate() + 56);
 
+            // As this looks at the CURRENT visit number, this IF statement is 
+            // actually checking visits 8 and 10 are next in order to add 4 weeks
             if (i === 7 || i === 9) {
                 currentTargetDate.setDate(currentTargetDate.getDate() + 28);
             }
@@ -149,8 +154,8 @@ function printSchedule() {
     };
 }
 
-// NEW: Event listeners
-// Listen for the form submission to trigger schedule generation
+// EVENT LISTENERS
+
 scheduleForm.addEventListener('submit', generateSchedule);
 printScheduleBtn.addEventListener('click', printSchedule);
 
